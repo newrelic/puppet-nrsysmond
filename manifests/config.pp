@@ -1,13 +1,13 @@
 class nrsysmond::config(
   $license_key,
-  $nrloglevel = undef,
-  $nrlogfile = undef,
-  $proxy = undef,
-  $ssl_ca_bundle = undef,
-  $ssl_ca_path = undef,
-  $nrpidfile = undef,
+  $nrloglevel,
+  $nrlogfile,
+  $proxy          = undef,
+  $ssl_ca_bundle  = undef,
+  $ssl_ca_path    = undef,
+  $nrpidfile      = undef,
   $collector_host = undef,
-  $timeout = undef
+  $timeout        = undef
 ) inherits nrsysmond::params {
   file { '/etc/newrelic/nrsysmond.cfg':
     owner   => root,
