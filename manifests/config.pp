@@ -3,6 +3,7 @@ class nrsysmond::config(
   $nrloglevel,
   $nrlogfile,
   $proxy          = undef,
+  $ssl            = undef,
   $ssl_ca_bundle  = undef,
   $ssl_ca_path    = undef,
   $nrpidfile      = undef,
