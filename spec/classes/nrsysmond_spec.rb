@@ -1,6 +1,8 @@
 require 'spec_helper'
 
 describe 'nrsysmond' do
+  let(:params) { {:license_key => '14758f1afd44c09b7992073ccf00b43d' }}
+
   context 'RedHat osfamily' do
     let(:facts) { {:osfamily => 'RedHat'} }
     it { should include_class('nrsysmond::params')}
