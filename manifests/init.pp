@@ -133,7 +133,8 @@ class nrsysmond (
     ssl_ca_path    => $ssl_ca_path,
     nrpidfile      => $nrpidfile,
     collector_host => $collector_host,
-    timeout        => $timeout
+    timeout        => $timeout,
+    require        => Package['newrelic-sysmond'],
   }
 
   service { 'newrelic-sysmond':
