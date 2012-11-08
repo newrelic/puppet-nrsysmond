@@ -35,6 +35,47 @@
 #
 # Copyright 2012 New Relic Inc., unless otherwise noted.
 #
-class nrsysmond inherits nrsysmond::params {
+class nrsysmond (
+  $license_key,
+  $nrloglevel     = $::nrsysmond::params::loglevel,
+  $nrlogfile      = $::nrsysmond::params::logfile,
+  $proxy          = undef,
+  $ssl_ca_bundle  = undef,
+  $ssl_ca_path    = undef,
+  $nrpidfile      = undef,
+  $collector_host = undef,
+  $timeout        = undef
+) inherits nrsysmond::params {
+  case $::osfamily {
+    'RedHat': {
+      include nrsysmond::repo::redhat
+    }
+    default: {
+      fail("The osfamily '${::osfamily}' is currently not supported")
+    }
+  }
 
+  package { 'newrelic-sysmond':
+    ensure  => latest,
+    require => Exec['install repo'],
+  }
+
+  class {'nrsysmond::config':
+    license_key    => $license_key,
+    nrloglevel     => $nrloglevel,
+    nrlogfile      => $nrlogfile,
+    proxy          => $proxy,
+    ssl_ca_bundle  => $ssl_ca_bundle,
+    ssl_ca_path    => $ssl_ca_path,
+    nrpidfile      => $nrpidfile,
+    collector_host => $collector_host,
+    timeout        => $timeout
+  }
+
+  service { 'newrelic-sysmond':
+    ensure    => running,
+    enable    => true,
+    subscribe => Package['newrelic-sysmond'],
+    require   => Class['nrsysmond::config']
+  }
 }

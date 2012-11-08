@@ -9,8 +9,7 @@ class nrsysmond::params {
     }
     'Ubuntu': {
     }
-    default: {
-      fail("The osfamily '${::osfamily}' is currently not supported")
-    }
   }
+  $loglevel = 'info'
+  $logfile = '/var/log/newrelic/nrsysmond.log'
 }
