@@ -1,30 +1,94 @@
 # == Class: nrsysmond
 #
-# Full description of class nrsysmond here.
+# This module manages the New Relic Server Agent.
 #
 # === Parameters
 #
 # Document parameters here.
 #
-# [*sample_parameter*]
-#   Explanation of what this parameter affects and what it defaults to.
-#   e.g. "Specify one or more upstream ntp servers as an array."
+# [*license_key*]
+#   40-character hexadecimal string provided by New Relic. This is required in order for
+#   the server monitor to start.
+#
+# [*nrloglevel*]
+#   Level of detail you want in the log file (as defined by the logfile
+#   setting below. Valid values are (in increasing levels of verbosity):
+#   error        - show errors only
+#   warning      - show errors and warnings
+#   info         - show minimal additional information messages
+#   verbose      - show more detailed information messages
+#   debug        - show debug messages
+#   verbosedebug - show very detailed debug messages
+#
+# [*nrlogifle*]
+#   Name of the file where the server monitor will store it's log messages. The amount
+#   of detail stored in this file is controlled
+#   by the loglevel option (above).
+#
+# [*proxy*]
+#   The name and optional login credentials of the proxy server to use
+#   for all communication with the New Relic collector. In its simplest
+#   form this setting is just a hostname[:port] setting. The default
+#   port if none is specified is 1080. If your proxy requires a user
+#   name, use the syntax user@host[:port]. If it also requires a
+#   password use the format user:password@host[:port]. For example:
+#     fred:secret@proxy.mydomain.com:8181
+#
+# [*ssl*]
+#   Whether or not to use the Secure Sockets Layer (SSL) for all
+#   communication with the New Relic collector. Possible values are
+#   true/on or false/off. In certain rare cases you may need to modify
+#   the SSL certificates settings below.
+#   **Default**: false
+#
+# [*ssl_ca_bundle*]
+#   The name of a PEM-encoded Certificate Authority (CA) bundle to use
+#   for SSL connections. This very rarely needs to be set. The monitor
+#   will attempt to find the bundle in the most common locations. If
+#   you need to use SSL and the monitor is unable to locate a CA bundle
+#   then either set this value or the ssl_ca_path option below.
+#   **Default**: /etc/ssl/certs/ca-certificates.crt or
+#            /etc/pki/tls/certs/ca-bundle.crt
+#
+# [*ssl_ca_path*]
+#   If your SSL installation does not use CA bundles, but rather has a
+#   directory with PEM-encoded Certificate Authority files, set this
+#   option to the name of the directory that contains all the CA files.
+#   **Default**: /etc/ssl/certs
+#
+# [*nrpidfile*]
+#   Name of a file where the server monitoring daemon will store it's
+#   process ID (PID). This is used by the startup and shutdown script
+#   to determine if the monitor is already running, and to start it up
+#   or shut it down.
+#   **Default**: /tmp/nrsysmond.pid
+#
+# [*collector_host*]
+#   The name of the New Relic collector to connect to. This should only
+#   ever be changed on advise from a New Relic support staff member.
+#   The format is host[:port]. Using a port number of 0 means the default
+#   port, which is 80 (if not using the ssl option - see below) or 443
+#   if SSL is enabled. If the port is omitted the default value is used.
+#   **Default**: collector.newrelic.com
+#
+# [*timeout*]
+#   How long the monitor should wait to contact the collector host. If
+#   the connection cannot be established in this period of time, the
+#   monitor will progressively back off in 15-second increments, up to
+#   a maximum of 300 seconds. Once the initial connection has been
+#   established, this value is reset back to the value specified here
+#   (or the default). This then sets the maximum time to wait for
+#   a connection to the collector to report data. There is no back-off
+#   once the original connection has been made. The value is in seconds.
+#   **Default**: 30
 #
 # === Variables
 #
-# Here you should define a list of variables that this module would require.
-#
-# [*sample_variable*]
-#   Explanation of how this variable affects the funtion of this class and if it
-#   has a default. e.g. "The parameter enc_ntp_servers must be set by the
-#   External Node Classifier as a comma separated list of hostnames." (Note,
-#   global variables should not be used in preference to class parameters  as of
-#   Puppet 2.6.)
 #
 # === Examples
 #
 #  class { nrsysmond:
-#    servers => [ 'pool.ntp.org', 'ntp.local.company.com' ]
+#    license_key => 14758f1afd44c09b7992073ccf00b43d
 #  }
 #
 # === Authors
