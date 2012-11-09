@@ -115,6 +115,9 @@ class nrsysmond (
     'RedHat': {
       include nrsysmond::repo::redhat
     }
+    'Debian': {
+      include nrsysmond::repo::debian
+    }
     default: {
       fail("The osfamily '${::osfamily}' is currently not supported")
     }
@@ -122,7 +125,10 @@ class nrsysmond (
 
   package { 'newrelic-sysmond':
     ensure  => latest,
-    require => Exec['install repo'],
+    require => $::osfamily ? {
+      'RedHat' => Class['nrsysmond::repo::redhat'],
+      'Debian' => Class['nrsysmond::repo::debian'],
+    }
   }
 
   class {'nrsysmond::config':
