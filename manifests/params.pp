@@ -7,7 +7,8 @@ class nrsysmond::params {
         $rpm_repo_location = 'http://yum.newrelic.com/pub/newrelic/el5/i386/newrelic-repo-5-3.noarch.rpm'
       }
     }
-    'Ubuntu': {
+    'Debian': {
+      $apt_repo = 'http://apt.newrelic.com/debian/'
     }
   }
   $loglevel = 'info'

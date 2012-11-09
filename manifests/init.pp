@@ -111,9 +111,14 @@ class nrsysmond (
   $collector_host = undef,
   $timeout        = undef
 ) inherits nrsysmond::params {
+  validate_re($license_key, '[0-9a-fA-F]{40}', 'License key is not a 40 character hexadecimal string')
+
   case $::osfamily {
     'RedHat': {
       include nrsysmond::repo::redhat
+    }
+    'Debian': {
+      include nrsysmond::repo::debian
     }
     default: {
       fail("The osfamily '${::osfamily}' is currently not supported")
@@ -122,7 +127,10 @@ class nrsysmond (
 
   package { 'newrelic-sysmond':
     ensure  => latest,
-    require => Exec['install repo'],
+    require => $::osfamily ? {
+      'RedHat' => Class['nrsysmond::repo::redhat'],
+      'Debian' => Class['nrsysmond::repo::debian'],
+    }
   }
 
   class {'nrsysmond::config':
