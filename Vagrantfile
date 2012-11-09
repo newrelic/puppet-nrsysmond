@@ -7,8 +7,8 @@ Vagrant::Config.run do |config|
   # please see the online documentation at vagrantup.com.
 
   # Every Vagrant virtual environment requires a box to build off of.
-  # config.vm.box = "centos-6.3-64bit-puppet-vbox.4.1.20-2"
-  config.vm.box = "ubuntu12_puppet"
+  config.vm.box = "centos-6.3-64bit-puppet-vbox.4.1.20-2"
+  # config.vm.box = "ubuntu12_puppet"
 
   # The url from where the 'config.vm.box' box will be fetched if it
   # doesn't already exist on the user's system.
