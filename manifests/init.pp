@@ -100,7 +100,7 @@
 # Copyright 2012 New Relic Inc., unless otherwise noted.
 #
 class nrsysmond (
-  $license_key,
+  $license_key    = $title,
   $nrloglevel     = $::nrsysmond::params::loglevel,
   $nrlogfile      = $::nrsysmond::params::logfile,
   $proxy          = undef,

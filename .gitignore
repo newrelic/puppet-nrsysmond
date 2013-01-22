@@ -1,2 +1,6 @@
 .vagrant
 spec/fixtures/*
+.tmp/
+modules/
+.bundle/
+.librarian/
