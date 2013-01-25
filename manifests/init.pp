@@ -4,8 +4,6 @@
 #
 # === Parameters
 #
-# Document parameters here.
-#
 # [*license_key*]
 #   40-character hexadecimal string provided by New Relic. This is required in order for
 #   the server monitor to start.
