@@ -17,11 +17,13 @@
 #   verbose      - show more detailed information messages
 #   debug        - show debug messages
 #   verbosedebug - show very detailed debug messages
+#   **Default**: info
 #
 # [*nrlogifle*]
 #   Name of the file where the server monitor will store it's log messages. The amount
 #   of detail stored in this file is controlled
 #   by the loglevel option (above).
+#   **Default**: /var/log/newrelic/nrsysmond.log
 #
 # [*proxy*]
 #   The name and optional login credentials of the proxy server to use
@@ -55,7 +57,7 @@
 #   **Default**: /etc/ssl/certs
 #
 # [*nrpidfile*]
-#   Name of a file where the server monitoring daemon will store it's
+#   Name of a file where the server monitoring daemon will store its
 #   process ID (PID). This is used by the startup and shutdown script
 #   to determine if the monitor is already running, and to start it up
 #   or shut it down.
@@ -63,7 +65,7 @@
 #
 # [*collector_host*]
 #   The name of the New Relic collector to connect to. This should only
-#   ever be changed on advise from a New Relic support staff member.
+#   ever be changed on the advice of New Relic support staff.
 #   The format is host[:port]. Using a port number of 0 means the default
 #   port, which is 80 (if not using the ssl option - see below) or 443
 #   if SSL is enabled. If the port is omitted the default value is used.

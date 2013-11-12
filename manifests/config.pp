@@ -1,7 +1,7 @@
 class nrsysmond::config(
   $license_key,
-  $nrloglevel,
-  $nrlogfile,
+  $nrloglevel     = $nrsysmond::params::loglevel,
+  $nrlogfile      = $nrsysmond::params::logfile,
   $proxy          = undef,
   $ssl            = undef,
   $ssl_ca_bundle  = undef,
@@ -10,6 +10,14 @@ class nrsysmond::config(
   $collector_host = undef,
   $timeout        = undef
 ) inherits nrsysmond::params {
+
+  validate_re($license_key, '[0-9a-fA-F]{40}', 'License key is not a 40 character hexadecimal string')
+
+  if (!member(['error', 'warning', 'info',
+               'verbose', 'debug', 'verbosedebug'], $nrloglevel)) {
+    fail("Log level of ${nrloglevel} was invalid.")
+  }
+
   file { '/etc/newrelic/nrsysmond.cfg':
     owner   => root,
     group   => root,
