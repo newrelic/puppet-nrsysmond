@@ -80,6 +80,12 @@
 #   once the original connection has been made. The value is in seconds.
 #   **Default**: 30
 #
+# [*version]
+#   The version of nrsysmond to install. Usually you would leave this at
+#   the default of 'latest', but if you prefer a specific release you may
+#   specify a version number here as a string.
+#   **Default**: latest
+#
 # === Variables
 #
 #
@@ -107,10 +113,9 @@ class nrsysmond (
   $ssl_ca_path    = undef,
   $nrpidfile      = undef,
   $collector_host = undef,
-  $timeout        = undef
+  $timeout        = undef,
+  $version        = $::nrsysmond::params::version
 ) inherits nrsysmond::params {
-  validate_re($license_key, '[0-9a-fA-F]{40}', 'License key is not a 40 character hexadecimal string')
-
   case $::osfamily {
     'RedHat': {
       include nrsysmond::repo::redhat
@@ -124,7 +129,7 @@ class nrsysmond (
   }
 
   package { 'newrelic-sysmond':
-    ensure  => latest,
+    ensure  => $version,
     require => $::osfamily ? {
       'RedHat' => Class['nrsysmond::repo::redhat'],
       'Debian' => Class['nrsysmond::repo::debian'],

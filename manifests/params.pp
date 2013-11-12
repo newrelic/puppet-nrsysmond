@@ -11,6 +11,7 @@ class nrsysmond::params {
       $apt_repo = 'http://apt.newrelic.com/debian/'
     }
   }
-  $loglevel = 'info'
-  $logfile = '/var/log/newrelic/nrsysmond.log'
+  $version  = 'latest'
+  $loglevel = 'error'
+  $logfile  = '/var/log/newrelic/nrsysmond.log'
 }
