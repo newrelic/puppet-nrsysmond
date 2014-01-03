@@ -13,9 +13,10 @@ class nrsysmond::repo::debian (
   }
 
   exec {'update apt':
-    command   => 'apt-get update',
-    path      => '/usr/bin:/bin',
-    require   => Exec['load apt key'],
-    subscribe => File['/etc/apt/sources.list.d/newrelic.list'],
+    command     => 'apt-get update',
+    path        => '/usr/bin:/bin',
+    require     => Exec['load apt key'],
+    refreshonly => true,
+    subscribe   => File['/etc/apt/sources.list.d/newrelic.list'],
   }
 }
