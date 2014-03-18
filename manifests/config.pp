@@ -19,9 +19,10 @@ class nrsysmond::config(
   }
 
   file { '/etc/newrelic/nrsysmond.cfg':
-    owner   => root,
-    group   => root,
-    mode    => 644,
-    content => template('nrsysmond/nrsysmond.cfg.erb'),
+    owner    => root,
+    group    => root,
+    mode     => 644,
+    content  => template('nrsysmond/nrsysmond.cfg.erb'),
+    notify   => Service["newrelic-sysmond"],
   }
 }
