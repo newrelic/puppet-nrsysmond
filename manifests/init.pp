@@ -119,7 +119,7 @@ class nrsysmond (
   $version        = $::nrsysmond::params::version
 ) inherits nrsysmond::params {
   case $::osfamily {
-    'RedHat': {
+    'RedHat','Linux': {
       include nrsysmond::repo::redhat
     }
     'Debian': {
@@ -133,8 +133,8 @@ class nrsysmond (
   package { 'newrelic-sysmond':
     ensure  => $version,
     require => $::osfamily ? {
-      'RedHat' => Class['nrsysmond::repo::redhat'],
-      'Debian' => Class['nrsysmond::repo::debian'],
+      /(RedHat|Linux)/ => Class['nrsysmond::repo::redhat'],
+      'Debian'         => Class['nrsysmond::repo::debian'],
     }
   }
 
