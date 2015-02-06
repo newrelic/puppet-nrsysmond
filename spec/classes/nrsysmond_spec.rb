@@ -5,7 +5,7 @@ describe 'nrsysmond' do
 
   context 'Invalid license key' do
     let(:params) { {:license_key => 'foobar' }}
-
+    let(:facts) { {:osfamily => 'RedHat' }}
       it {
         expect {
           should include_class('nrsysmond::params')
@@ -23,7 +23,7 @@ describe 'nrsysmond' do
       it { should contain_class('nrsysmond::config').with(
         'license_key' => 'asdfdsa51c05cbdcc1dc3e78fa981c2f4790e6902fd1c4f',
         'nrlogfile'   => '/var/log/newrelic/nrsysmond.log',
-        'nrloglevel'  => 'info'
+        'nrloglevel'  => 'error'
       )}
 
       it { should contain_service 'newrelic-sysmond' }
