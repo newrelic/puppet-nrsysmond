@@ -8,7 +8,7 @@ describe 'nrsysmond' do
     let(:facts) { {:osfamily => 'RedHat' }}
       it {
         expect {
-          should include_class('nrsysmond::params')
+          should contain_class('nrsysmond::params')
         }.to raise_error(Puppet::Error, /40 character hexadecimal/)
       }
   end
@@ -16,7 +16,9 @@ describe 'nrsysmond' do
   ['RedHat', 'Debian'].each do |platform|
     context "#{platform} osfamily" do
       let(:facts) { {:osfamily => platform} }
-      it { should include_class('nrsysmond::params')}
+      it { should compile.with_all_deps }
+
+      it { should contain_class('nrsysmond::params')}
 
       it { should contain_package 'newrelic-sysmond'}
 
@@ -30,10 +32,61 @@ describe 'nrsysmond' do
     end
   end
 
+  context "on Non-RedHat" do
+    let(:facts) {{:osfamily => 'Debian'}}
+    describe 'should not manage user' do
+      it { should compile.with_all_deps }
+      it { should_not contain_group('newrelic') }
+      it { should_not contain_user('newrelic') }
+      it { should contain_package('newrelic-sysmond').with(
+                    :require => 'Class[Nrsysmond::Repo::Debian]',
+      )}
+    end
+  end
+
+
+  context "on RedHat < 7" do
+    let(:facts) {{:osfamily => 'RedHat', :operatingsystemmajrelease => 6}}
+    describe 'should not manage user' do
+      it { should compile.with_all_deps }
+      it { should_not contain_group('newrelic') }
+      it { should_not contain_user('newrelic') }
+      it { should contain_package('newrelic-sysmond').with(
+                    :require => 'Class[Nrsysmond::Repo::Redhat]',
+      )}
+    end
+  end
+
+  context "on RedHat >= 7" do
+    let(:facts) {{:osfamily => 'RedHat', :operatingsystemmajrelease => 7}}
+    describe 'should manage user' do
+      it { should compile.with_all_deps }
+      it { should contain_group('newrelic').with(
+                    :ensure     => 'present',
+                    :forcelocal => true,
+                    :system     => true,
+      )}
+      it { should contain_user('newrelic').with(
+                    :ensure     => 'present',
+                    :comment    => 'New Relic daemons',
+                    :forcelocal => true,
+                    :gid        => 'newrelic',
+                    :home       => '/.newrelic',
+                    :managehome => true,
+                    :shell      => '/sbin/nologin',
+                    :system     => true,
+                    :require    => 'Group[newrelic]',
+      )}
+      it { should contain_package('newrelic-sysmond').with(
+                    :require => ['Class[Nrsysmond::Repo::Redhat]', 'User[newrelic]'],
+      )}
+    end
+  end
+
   context 'Non-Ubuntu and non-RedHat osfamily' do
     it do
       expect {
-        should include_class('nrsysmond::params')
+        should contain_class('nrsysmond::params')
       }.to raise_error(Puppet::Error, /not supported/)
     end
   end
