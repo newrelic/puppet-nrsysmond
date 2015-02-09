@@ -124,7 +124,7 @@ class nrsysmond (
       # https://support.newrelic.com/requests/130089
       # workaround for RPM that's broken on Cent7+ (or any other distro
       # that uses shadow-utils >= 4.1.5 )
-      if ( $::operatingsystemmajrelease == '7' or $::operatingsystemmajrelease == 7 ) {
+      if ( $::selinux == true or $::selinux == 'true' ) {
         group {'newrelic':
           ensure     => 'present',
           forcelocal => true,

@@ -32,21 +32,8 @@ describe 'nrsysmond' do
     end
   end
 
-  context "on Non-RedHat" do
-    let(:facts) {{:osfamily => 'Debian'}}
-    describe 'should not manage user' do
-      it { should compile.with_all_deps }
-      it { should_not contain_group('newrelic') }
-      it { should_not contain_user('newrelic') }
-      it { should contain_package('newrelic-sysmond').with(
-                    :require => 'Class[Nrsysmond::Repo::Debian]',
-      )}
-    end
-  end
-
-
-  context "on RedHat < 7" do
-    let(:facts) {{:osfamily => 'RedHat', :operatingsystemmajrelease => 6}}
+  context "without SELinux" do
+    let(:facts) {{:osfamily => 'RedHat', :selinux => 'false'}}
     describe 'should not manage user' do
       it { should compile.with_all_deps }
       it { should_not contain_group('newrelic') }
@@ -57,8 +44,8 @@ describe 'nrsysmond' do
     end
   end
 
-  context "on RedHat >= 7" do
-    let(:facts) {{:osfamily => 'RedHat', :operatingsystemmajrelease => 7}}
+  context "with SELinux" do
+    let(:facts) {{:osfamily => 'RedHat', :selinux => 'true'}}
     describe 'should manage user' do
       it { should compile.with_all_deps }
       it { should contain_group('newrelic').with(
