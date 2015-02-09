@@ -121,9 +121,34 @@ class nrsysmond (
   case $::osfamily {
     'RedHat': {
       include nrsysmond::repo::redhat
+      # https://support.newrelic.com/requests/130089
+      # workaround for RPM that's broken on Cent7+ (or any other distro
+      # that uses shadow-utils >= 4.1.5 )
+      if ( $::selinux == true or $::selinux == 'true' ) {
+        group {'newrelic':
+          ensure     => 'present',
+          forcelocal => true,
+          system     => true,
+        }
+        user {'newrelic':
+          ensure     => 'present',
+          comment    => 'New Relic daemons',
+          forcelocal => true,
+          gid        => 'newrelic',
+          home       => '/.newrelic',
+          managehome => true,
+          shell      => '/sbin/nologin',
+          system     => true,
+          require    => 'Group[newrelic]',
+        }
+        $osfam_req = [Class['nrsysmond::repo::redhat'], User['newrelic']]
+      } else {
+        $osfam_req = Class['nrsysmond::repo::redhat']
+      }
     }
     'Debian': {
       include nrsysmond::repo::debian
+      $osfam_req = Class['nrsysmond::repo::debian']
     }
     default: {
       fail("The osfamily '${::osfamily}' is currently not supported")
@@ -132,10 +157,7 @@ class nrsysmond (
 
   package { 'newrelic-sysmond':
     ensure  => $version,
-    require => $::osfamily ? {
-      'RedHat' => Class['nrsysmond::repo::redhat'],
-      'Debian' => Class['nrsysmond::repo::debian'],
-    }
+    require => $osfam_req,
   }
 
   class {'nrsysmond::config':

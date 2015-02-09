@@ -1,3 +1,7 @@
+# = Class: nrsysmond::params
+#
+# Provides default parameter values for nrsysmond
+#
 class nrsysmond::params {
   case $::osfamily {
     'RedHat': {
@@ -9,6 +13,9 @@ class nrsysmond::params {
     }
     'Debian': {
       $apt_repo = 'http://apt.newrelic.com/debian/'
+    }
+    default: {
+      fail("ERROR: nrsysmond is not supported on osfamily ${::osfamily}")
     }
   }
   $version  = 'latest'
