@@ -88,6 +88,12 @@
 #   specify a version number here as a string.
 #   **Default**: latest
 #
+# [*labels]
+#   A hash of label names and values for categories that will be
+#   applied to the data sent from this agent.
+#   **Default**: undef
+#
+#
 # === Variables
 #
 #
@@ -116,7 +122,8 @@ class nrsysmond (
   $nrpidfile      = undef,
   $collector_host = undef,
   $timeout        = undef,
-  $version        = $::nrsysmond::params::version
+  $version        = $::nrsysmond::params::version,
+  $labels         = undef
 ) inherits nrsysmond::params {
   case $::osfamily {
     'RedHat': {
@@ -149,6 +156,7 @@ class nrsysmond (
     nrpidfile      => $nrpidfile,
     collector_host => $collector_host,
     timeout        => $timeout,
+    labels         => $labels,
     require        => Package['newrelic-sysmond'],
   }
 

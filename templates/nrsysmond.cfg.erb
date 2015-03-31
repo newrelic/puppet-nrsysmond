@@ -136,3 +136,18 @@ collector_host=<%= @collector_host %>
 timeout=<%= @timeout %>
 
 <% end -%>
+
+#
+# Option : labels
+#
+# Value  : A dictionary of label names and values for categories that will be
+#          applied to the data sent from this agent. May also be expressed as
+#          a semicolon delimited string of colon-separated pairs;
+#          for example, labels=Server:One;Data Center:Primary;.
+# Default: none
+
+<% if @labels %>
+labels="<% @labels.each do |key, value| -%><%= key %>:<%= value %>;<% end %>"
+<% else %>
+#labels=
+<% end %>
