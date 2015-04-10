@@ -20,7 +20,7 @@ class nrsysmond::config(
   $timeout        = undef
 ) inherits nrsysmond::params {
 
-  validate_re($license_key, '^[0-9a-fA-F]{40}$', 'License key is not a 40 character hexadecimal string')
+  validate_re($license_key, '^[0-9a-zA-Z]{40}$', 'License key is not a 40 character alphanumeric string')
 
   if (!member(['error', 'warning', 'info',
                 'verbose', 'debug', 'verbosedebug'], $nrloglevel)) {

@@ -5,8 +5,8 @@
 # === Parameters
 #
 # [*license_key*]
-#   40-character hexadecimal string provided by New Relic. This is required in order for
-#   the server monitor to start.
+#   40-character alphanumeric string provided by New Relic. This is required in
+#   order for the server monitor to start.
 #
 # [*nrloglevel*]
 #   Level of detail you want in the log file (as defined by the logfile

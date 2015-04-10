@@ -9,7 +9,7 @@ describe 'nrsysmond' do
       it {
         expect {
           should include_class('nrsysmond::params')
-        }.to raise_error(Puppet::Error, /40 character hexadecimal/)
+        }.to raise_error(Puppet::Error, /40 character alphanumeric/)
       }
   end
 
