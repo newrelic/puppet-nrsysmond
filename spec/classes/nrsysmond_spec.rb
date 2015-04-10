@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 describe 'nrsysmond' do
-  let(:params) { {:license_key => '0123456789012345678901234567890123456789' }}
+  let(:params) { {:license_key => '0123456789ABCDEFabcdef2345678901234567Zz' }}
 
   shared_examples_for 'Invalid license key' do
     let(:params) { {:license_key => 'foobar' }}
@@ -39,7 +39,7 @@ describe 'nrsysmond' do
       it { should contain_package 'newrelic-sysmond'}
 
       it { should contain_class('nrsysmond::config').with(
-        'license_key' => '0123456789012345678901234567890123456789',
+        'license_key' => '0123456789ABCDEFabcdef2345678901234567Zz',
         'nrlogfile'   => '/var/log/newrelic/nrsysmond.log',
         'nrloglevel'  => 'error'
       )}
