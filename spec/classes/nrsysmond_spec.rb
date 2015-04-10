@@ -25,6 +25,12 @@ describe 'nrsysmond' do
     it_behaves_like 'Invalid license key'
   end
 
+  context 'the license key contains 40 non-alphanumeric characters' do
+    let(:params) { {:license_key => '$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$' }}
+
+    it_behaves_like 'Invalid license key'
+  end
+
   ['RedHat', 'Debian'].each do |platform|
     context "#{platform} osfamily" do
       let(:facts) { {:osfamily => platform} }
