@@ -4,7 +4,6 @@ describe 'nrsysmond' do
   let(:params) { {:license_key => '0123456789ABCDEFabcdef2345678901234567Zz' }}
 
   shared_examples_for 'Invalid license key' do
-    let(:params) { {:license_key => 'foobar' }}
     let(:facts) { {:osfamily => 'RedHat' }}
       it {
         expect {
