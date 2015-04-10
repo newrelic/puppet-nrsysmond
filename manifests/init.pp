@@ -130,12 +130,14 @@ class nrsysmond (
     }
   }
 
+  $osfam_req = $::osfamily ? {
+    'RedHat' => Class['nrsysmond::repo::redhat'],
+    'Debian' => Class['nrsysmond::repo::debian'],
+  }
+
   package { 'newrelic-sysmond':
     ensure  => $version,
-    require => $::osfamily ? {
-      'RedHat' => Class['nrsysmond::repo::redhat'],
-      'Debian' => Class['nrsysmond::repo::debian'],
-    }
+    require => $osfam_req,
   }
 
   class {'nrsysmond::config':
