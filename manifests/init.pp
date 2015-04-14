@@ -5,8 +5,8 @@
 # === Parameters
 #
 # [*license_key*]
-#   40-character hexadecimal string provided by New Relic. This is required in order for
-#   the server monitor to start.
+#   40-character alphanumeric string provided by New Relic. This is required in
+#   order for the server monitor to start.
 #
 # [*nrloglevel*]
 #   Level of detail you want in the log file (as defined by the logfile
@@ -130,12 +130,14 @@ class nrsysmond (
     }
   }
 
+  $osfam_req = $::osfamily ? {
+    'RedHat' => Class['nrsysmond::repo::redhat'],
+    'Debian' => Class['nrsysmond::repo::debian'],
+  }
+
   package { 'newrelic-sysmond':
     ensure  => $version,
-    require => $::osfamily ? {
-      'RedHat' => Class['nrsysmond::repo::redhat'],
-      'Debian' => Class['nrsysmond::repo::debian'],
-    }
+    require => $osfam_req,
   }
 
   class {'nrsysmond::config':
