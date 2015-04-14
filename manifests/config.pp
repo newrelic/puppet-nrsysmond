@@ -17,7 +17,8 @@ class nrsysmond::config(
   $ssl_ca_path    = undef,
   $nrpidfile      = undef,
   $collector_host = undef,
-  $timeout        = undef
+  $timeout        = undef,
+  $labels         = undef,
 ) inherits nrsysmond::params {
 
   validate_re($license_key, '^[0-9a-zA-Z]{40}$', 'License key is not a 40 character alphanumeric string')
