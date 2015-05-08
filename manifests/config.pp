@@ -9,6 +9,7 @@
 #
 class nrsysmond::config(
   $license_key,
+  $hostname       = undef,
   $nrloglevel     = $nrsysmond::params::loglevel,
   $nrlogfile      = $nrsysmond::params::logfile,
   $proxy          = undef,

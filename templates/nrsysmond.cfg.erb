@@ -15,6 +15,23 @@
 #
 license_key=<%= @license_key %>
 
+<% if @hostname %>
+#
+# Option : hostname
+# Value  : Sets the hostname of the server as it appears in New Relic. If not
+#          specified, the OS-level hostname will be used.
+#          Caution: The New Relic user interface uses the hostname to link monitored
+#          applications to the server they are running on. Using the hostname
+#          configuration setting in the nrsysmond.cfg file may cause a different name
+#          to be reported for the server than what is reported by any monitored
+#          applications. This difference may cause the linkage between the application
+#          and the server in the New Relic user interface to break.
+#          See https://docs.newrelic.com/docs/servers/new-relic-servers-linux/maintenance/changing-linux-server-name#configuration-file
+# Default: none
+#
+hostname=<%= @hostname %>
+
+<% end -%>
 #
 # Option : loglevel
 # Value  : Level of detail you want in the log file (as defined by the logfile

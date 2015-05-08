@@ -8,6 +8,18 @@
 #   40-character alphanumeric string provided by New Relic. This is required in
 #   order for the server monitor to start.
 #
+# [*hostname*]
+#   Sets the hostname of the server as it appears in New Relic. If not
+#   specified, the OS-level hostname will be used.
+#   Caution: The New Relic user interface uses the hostname to link monitored
+#   applications to the server they are running on. Using the hostname
+#   configuration setting in the nrsysmond.cfg file may cause a different name
+#   to be reported for the server than what is reported by any monitored
+#   applications. This difference may cause the linkage between the application
+#   and the server in the New Relic user interface to break.
+#   See https://docs.newrelic.com/docs/servers/new-relic-servers-linux/maintenance/changing-linux-server-name#configuration-file
+#   **Default**: undef
+#
 # [*nrloglevel*]
 #   Level of detail you want in the log file (as defined by the logfile
 #   setting below. Valid values are (in increasing levels of verbosity):
@@ -113,6 +125,7 @@
 #
 class nrsysmond (
   $license_key,
+  $hostname       = undef,
   $nrloglevel     = $::nrsysmond::params::loglevel,
   $nrlogfile      = $::nrsysmond::params::logfile,
   $proxy          = undef,
@@ -149,6 +162,7 @@ class nrsysmond (
 
   class {'nrsysmond::config':
     license_key    => $license_key,
+    hostname       => $hostname,
     nrloglevel     => $nrloglevel,
     nrlogfile      => $nrlogfile,
     proxy          => $proxy,
