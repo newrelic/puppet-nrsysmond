@@ -2,7 +2,12 @@
 #
 # Provides default parameter values for nrsysmond
 #
-class nrsysmond::params {
+class nrsysmond::params(
+  $version = 'latest',
+  $loglevel = 'error',
+  $logfile  = '/var/log/newrelic/nrsysmond.log',
+  $enabled = true
+){
   case $::osfamily {
     'RedHat': {
       if $::hardwaremodel == 'x86_64' {
@@ -18,7 +23,4 @@ class nrsysmond::params {
       fail("ERROR: nrsysmond is not supported on osfamily ${::osfamily}")
     }
   }
-  $version  = 'latest'
-  $loglevel = 'error'
-  $logfile  = '/var/log/newrelic/nrsysmond.log'
 }
