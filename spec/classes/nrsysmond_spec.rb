@@ -42,8 +42,6 @@ describe 'nrsysmond' do
         'nrlogfile'   => '/var/log/newrelic/nrsysmond.log',
         'nrloglevel'  => 'error'
       )}
-
-      it { should contain_service 'newrelic-sysmond' }
     end
   end
 
