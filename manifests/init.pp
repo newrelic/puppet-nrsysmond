@@ -93,6 +93,9 @@
 #   applied to the data sent from this agent.
 #   **Default**: undef
 #
+# [*enabled]
+#   A boolean which ensures the service is started or stopped
+#   **Default**: true
 #
 # === Variables
 #
@@ -123,7 +126,8 @@ class nrsysmond (
   $collector_host = undef,
   $timeout        = undef,
   $version        = $::nrsysmond::params::version,
-  $labels         = undef
+  $labels         = undef,
+  $enabled        = undef
 ) inherits nrsysmond::params {
   case $::osfamily {
     'RedHat': {
@@ -162,10 +166,5 @@ class nrsysmond (
     require        => Package['newrelic-sysmond'],
   }
 
-  service { 'newrelic-sysmond':
-    ensure    => running,
-    enable    => true,
-    subscribe => Package['newrelic-sysmond'],
-    require   => Class['nrsysmond::config']
-  }
+  include nrsysmond::service
 }
