@@ -12,10 +12,16 @@
 #   - start or stop the service
 #
 class nrsysmond::service(
-  $enabled = nrsysmond::params::service::enable
+  $enabled = $::nrsysmond::params::enabled
 ){
+
+  if $enabled {
+    $_enable = 'running'
+  } else {
+    $_enable = 'stopped'
+  }
   service { 'newrelic-sysmond':
-    ensure    => $enabled,
+    ensure    => $_enable,
     enable    => $enabled,
     subscribe => Package['newrelic-sysmond'],
     require   => Class['nrsysmond::config']
