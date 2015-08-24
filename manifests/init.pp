@@ -116,7 +116,7 @@
 #
 class nrsysmond (
   $license_key,
-  $nrloglevel     = $::nrsysmond::params::loglevel,
+  $nrloglevel     = $::nrsysmond::params::log_level,
   $nrlogfile      = $::nrsysmond::params::logfile,
   $proxy          = undef,
   $ssl            = undef,
@@ -166,5 +166,5 @@ class nrsysmond (
     require        => Package['newrelic-sysmond'],
   }
 
-  include nrsysmond::service
+  class { 'nrsysmond::service': enabled => $enabled }
 }
