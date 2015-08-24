@@ -14,6 +14,20 @@ your modules.
   }
 ```
 
+You can disable the newrelic-sysmond service by passing in the parameter enabled like so:
+
+```puppet
+  class { 'nrsysmond':
+    enabled => false
+  }
+```
+
+or by setting the following in hiera:
+
+```yaml
+  nrsysmond::params::enabled: false
+```
+
 ## Reference
 
 See the [Nrsysmond class](https://github.com/newrelic/puppet-nrsysmond/blob/master/manifests/init.pp)
