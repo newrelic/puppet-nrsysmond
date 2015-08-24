@@ -4,7 +4,7 @@
 #
 class nrsysmond::params(
   $version = 'latest',
-  $loglevel = 'error',
+  $log_level = 'error',
   $logfile  = '/var/log/newrelic/nrsysmond.log',
   $enabled = true
 ){
