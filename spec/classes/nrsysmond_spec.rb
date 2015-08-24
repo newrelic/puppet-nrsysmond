@@ -7,7 +7,7 @@ describe 'nrsysmond' do
     let(:facts) { {:osfamily => 'RedHat' }}
       it {
         expect {
-          should include_class('nrsysmond::params')
+          should contain_class('nrsysmond::params')
         }.to raise_error(Puppet::Error, /40 character alphanumeric/)
       }
   end
@@ -58,7 +58,7 @@ describe 'nrsysmond' do
   ['RedHat', 'Debian'].each do |platform|
     context "#{platform} osfamily" do
       let(:facts) { {:osfamily => platform} }
-      it { should include_class('nrsysmond::params')}
+      it { should contain_class('nrsysmond::params')}
 
       it { should contain_package 'newrelic-sysmond'}
 
@@ -73,7 +73,7 @@ describe 'nrsysmond' do
   context 'Non-Ubuntu and non-RedHat osfamily' do
     it do
       expect {
-        should include_class('nrsysmond::params')
+        should contain_class('nrsysmond::params')
       }.to raise_error(Puppet::Error, /not supported/)
     end
   end
