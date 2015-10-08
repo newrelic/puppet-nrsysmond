@@ -12,7 +12,7 @@ class nrsysmond::repo::debian (
 
   exec { 'load apt key':
     path    => '/usr/bin:/bin',
-    command => 'wget -O- http://download.newrelic.com/548C16BF.gpg | apt-key add -',
+    command => 'wget -O- https://download.newrelic.com/548C16BF.gpg | apt-key add -',
     unless  => 'apt-key list | grep 548C16BF',
   }
 
