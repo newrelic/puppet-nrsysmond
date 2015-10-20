@@ -113,17 +113,21 @@
 #
 class nrsysmond (
   $license_key,
-  $nrloglevel     = $::nrsysmond::params::loglevel,
-  $nrlogfile      = $::nrsysmond::params::logfile,
-  $proxy          = undef,
-  $ssl            = undef,
-  $ssl_ca_bundle  = undef,
-  $ssl_ca_path    = undef,
-  $nrpidfile      = undef,
-  $collector_host = undef,
-  $timeout        = undef,
-  $version        = $::nrsysmond::params::version,
-  $labels         = undef
+  $nrloglevel         = $::nrsysmond::params::loglevel,
+  $nrlogfile          = $::nrsysmond::params::logfile,
+  $proxy              = undef,
+  $ssl                = undef,
+  $ssl_ca_bundle      = undef,
+  $ssl_ca_path        = undef,
+  $nrpidfile          = undef,
+  $collector_host     = undef,
+  $timeout            = undef,
+  $version            = $::nrsysmond::params::version,
+  $labels             = undef,
+  $disable_nfs        = undef,
+  $disable_docker     = undef,
+  $cgroup_root        = undef,
+  $ignore_reclaimable = undef
 ) inherits nrsysmond::params {
   case $::osfamily {
     'RedHat': {
@@ -148,18 +152,22 @@ class nrsysmond (
   }
 
   class {'nrsysmond::config':
-    license_key    => $license_key,
-    nrloglevel     => $nrloglevel,
-    nrlogfile      => $nrlogfile,
-    proxy          => $proxy,
-    ssl            => $ssl,
-    ssl_ca_bundle  => $ssl_ca_bundle,
-    ssl_ca_path    => $ssl_ca_path,
-    nrpidfile      => $nrpidfile,
-    collector_host => $collector_host,
-    timeout        => $timeout,
-    labels         => $labels,
-    require        => Package['newrelic-sysmond'],
+    license_key         => $license_key,
+    nrloglevel          => $nrloglevel,
+    nrlogfile           => $nrlogfile,
+    proxy               => $proxy,
+    ssl                 => $ssl,
+    ssl_ca_bundle       => $ssl_ca_bundle,
+    ssl_ca_path         => $ssl_ca_path,
+    nrpidfile           => $nrpidfile,
+    collector_host      => $collector_host,
+    timeout             => $timeout,
+    labels              => $labels,
+    disable_nfs         => $disable_nfs,
+    disable_docker      => $disable_docker,
+    cgroup_root         => $cgroup_root,
+    ignore_reclaimable  => $ignore_reclaimable,
+    require             => Package['newrelic-sysmond'],
   }
 
   service { 'newrelic-sysmond':
