@@ -151,3 +151,47 @@ labels="<% @labels.each do |key, value| -%><%= key %>:<%= value %>;<% end %>"
 <% else %>
 #labels=
 <% end %>
+
+<% if @disable_nfs %>
+#
+# Option : disable_nfs
+# Type   : boolean
+# Value  : Set to true to disable NFS client statistics gathering.
+# Default: false
+#
+disable_docker=<%= @disable_nfs %>
+<% end %>
+<% if @disable_docker %>
+#
+# Option : disable_docker
+# Type   : boolean
+# Value  : Set to true to disable Docker container statistics gathering.
+# Default: false
+#
+disable_docker=<%= @disable_docker %>
+<% end %>
+<% if @cgroup_root %>
+#
+# Option : cgroup_root
+# Type   : string
+# Value  : Set to the top level mount point for CGroup data files. Usually
+#          the daemon will auto-detect this but you can provide a specific
+#          path if, for example, you have multiple CGroup mounts.
+# Default: Distribution dependent, but usually /sys/fs/cgroup or /cgroup.
+#
+cgroup_root=<%= @cgroup_root %>
+<% end %>
+<% if @ignore_reclaimable %>
+#
+# Option : ignore_reclaimable
+# Type   : boolean
+# Value  : Set to true if the memory the kernel refers to as "reclaimable
+#          slabs" should be ignored when calculating how much RAM is in
+#          use. The default for this value changed in version 2.1.1 from
+#          false to true. Setting this to true gives a more accurate picture
+#          of how much RAM is in use but will cause a sudden drop in RAM used
+#          when first upgrading to version 2.1.1.
+# Default: true
+#
+ignore_reclaimable=<%= @ignore_reclaimable %>
+<% end %>
