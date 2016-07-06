@@ -147,7 +147,7 @@ timeout=<%= @timeout %>
 # Default: none
 
 <% if @labels %>
-labels="<% @labels.each do |key, value| -%><%= key %>:<%= value %>;<% end %>"
+labels="<% @labels.sort.each do |key_value| -%><%= key_value[0] %>:<%= key_value[1] %>;<% end %>"
 <% else %>
 #labels=
 <% end %>
